@@ -22,7 +22,11 @@ impl MathParser {
             match *symbol as char {
                 '0'..='9' | 'a'..='z' | 'A'..='Z' | '_' => last_number.push(*symbol as char),
                 '+' | '-' | '*' | '/' => {
-                    result = Self::parse_number(&expression.vars, &last_number);
+                    result = Self::process_operation(
+                        &operator,
+                        &result,
+                        &Self::parse_number(&expression.vars, &last_number),
+                    );
                     last_number.clear();
                     operator = *symbol as char;
                 }
